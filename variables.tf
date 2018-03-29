@@ -21,6 +21,11 @@ variable "k8s_version" {
   default     = "1.8.7"
 }
 
+variable "dns_prefix" {
+  description = "(Optional) DNS prefix specified when creating the managed cluster."
+  default     = ""
+}
+
 variable "sp_client_id" {
   description = <<EOL
   Service Principal ID with permissions to manage resources in the target subscription
@@ -80,7 +85,7 @@ variable "public_key_data" {
 
 variable "create_container_registry" {
   description = "Should a container registry be created with the AKS cluster (true / false)"
-  default     = true
+  default     = "false"
 }
 
 variable "container_registry_rg" {

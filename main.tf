@@ -8,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "aks_managed_cluster" {
   location            = "${azurerm_resource_group.aks_resource_group.location}"
   resource_group_name = "${azurerm_resource_group.aks_resource_group.name}"
   kubernetes_version  = "${var.k8s_version}"
-  dns_prefix          = "sandboxaks"
+  dns_prefix          = "${var.dns_prefix}"
 
   agent_pool_profile {
     name            = "${var.agent_prefix}"
