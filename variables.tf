@@ -26,6 +26,9 @@ variable "sp_client_id" {
   Service Principal ID with permissions to manage resources in the target subscription
   Note: this should be defined as either an environment variable or an external var-file reference and not stored with the code base
 EOL
+
+  //  default = "00000000-0000-0000-0000-000000000000"
+  default = "please-configure-sp-details"
 }
 
 variable "sp_client_secret" {
@@ -33,6 +36,8 @@ variable "sp_client_secret" {
   Service Principal password with permissions to manage resources in the target subscription
   Note: this should be defined as either an environment variable or an external var-file reference and not stored with the code base
 EOL
+
+  default = "000000000000000000000000000000000000000000000="
 }
 
 #################################
@@ -111,4 +116,9 @@ variable "nginx_deployment_name" {
 variable "ingress_controller_namespace" {
   description = "Kubernetes namespace the ingress controller will be deployed into"
   default     = "default"
+}
+
+variable "certificate_email" {
+  description = "(Reqiured) Email account to use for the LetsEncrypt service"
+  default     = ""
 }

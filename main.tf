@@ -42,7 +42,6 @@ data "template_file" "ingress_controller_patch" {
 }
 
 resource "null_resource" "provision" {
-
   provisioner "local-exec" {
     command = "az aks get-credentials -n ${var.cluster_name} -g ${azurerm_resource_group.aks_resource_group.name}"
   }
@@ -64,7 +63,7 @@ resource "null_resource" "provision" {
 
   provisioner "file" {
     destination = "./ingress_controller_patch.yaml"
-    content = "${data.template_file.ingress_controller_patch.rendered}"
+    content     = "${data.template_file.ingress_controller_patch.rendered}"
   }
 
   provisioner "local-exec" {
@@ -76,5 +75,4 @@ resource "null_resource" "provision" {
   provisioner "local-exec" {
     command = "helm install stable/cert-manager -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
   }
-
 }
