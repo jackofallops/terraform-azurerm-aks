@@ -8,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "aks_managed_cluster" {
   location            = "${azurerm_resource_group.aks_resource_group.location}"
   resource_group_name = "${azurerm_resource_group.aks_resource_group.name}"
   kubernetes_version  = "${var.k8s_version}"
-  dns_prefix          = "${var.dns_prefix}"
+  dns_prefix          = "${var.dns_prefix == "" ? var.cluster_name : var.dns_prefix}"
 
   agent_pool_profile {
     name            = "${var.agent_prefix}"
@@ -75,4 +75,6 @@ resource "null_resource" "provision" {
   provisioner "local-exec" {
     command = "helm install stable/cert-manager -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
   }
+
+  depends_on = ["azurerm_kubernetes_cluster.aks_managed_cluster"]
 }
