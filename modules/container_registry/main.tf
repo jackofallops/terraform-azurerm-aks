@@ -13,6 +13,6 @@ resource "azurerm_container_registry" "container_registry" {
   tags = "${var.tags}"
 
   lifecycle {
-//    prevent_destroy = true
+    //    prevent_destroy = true
   }
 }
