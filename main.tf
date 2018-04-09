@@ -59,3 +59,11 @@ resource "null_resource" "provision" {
 
   depends_on = ["azurerm_kubernetes_cluster.aks_managed_cluster"]
 }
+
+resource "null_resource" "connect_acr" {
+  count = "${var.create_container_registry == "true" ? 1 : 0}"
+
+  provisioner "local-exec" {
+    command = "az role assignment create --assignee ${var.sp_client_id} --role Reader --scope ${module.container_registry.id}"
+  }
+}
