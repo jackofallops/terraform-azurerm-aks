@@ -56,7 +56,7 @@ variable "agent_prefix" {
 
 variable "agent_vm_sku" {
   description = "Azure VM SKU for the agent/worker nodes"
-  default     = "Standard_D2_V2"
+  default     = "Standard_DS2_v2"
 }
 
 variable "node_os_disk_size_gb" {
@@ -118,6 +118,18 @@ variable "nginx_deployment_name" {
   default     = "ingress-nginx"
 }
 
+variable "cert_manager_deployment_name" {
+  description = "Kubernetes deployment name for the certificate manager"
+  default     = "certifcate-manager"
+}
+variable "cert_manager_helm_package" {
+  description = <<EOF
+Certificate manager (LetsEncrypt implementation) - the deprecated 'kube-lego' should be used until AKS supports RBAC properly, at which time this module will be migrated to cert-manager
+EOF
+  default     = "kube-lego"
+  //  default     = "cert-manager"
+}
+
 variable "ingress_controller_namespace" {
   description = "Kubernetes namespace the ingress controller will be deployed into"
   default     = "default"
@@ -125,5 +137,6 @@ variable "ingress_controller_namespace" {
 
 variable "certificate_email" {
   description = "(Reqiured) Email account to use for the LetsEncrypt service"
-  default     = ""
+  default     = "noreply@contoso.com"
 }
+

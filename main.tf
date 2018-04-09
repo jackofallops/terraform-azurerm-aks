@@ -48,7 +48,7 @@ resource "null_resource" "provision" {
 
   provisioner "local-exec" {
     # install tiller and wait for the container to initialise on the cluster
-    command = "helm init && kubectl cluster-info"
+    command = "helm init && sleep 20 && kubectl cluster-info"
   }
 
   provisioner "local-exec" {
@@ -58,22 +58,16 @@ resource "null_resource" "provision" {
 
   provisioner "local-exec" {
     # install ingress controller
-    command = "helm install stable/ingress-nginx -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
-  }
-
-  provisioner "file" {
-    destination = "./ingress_controller_patch.yaml"
-    content     = "${data.template_file.ingress_controller_patch.rendered}"
+    command = "helm install stable/nginx-ingress -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
   }
 
   provisioner "local-exec" {
-    # patch ingress controller?
-    command = "kubectl apply -f ./ingress-controller-patch.yaml"
+    command = "kubectl apply -f - | echo '${data.template_file.ingress_controller_patch.rendered}'"
   }
 
   # install cert-manager
   provisioner "local-exec" {
-    command = "helm install stable/cert-manager -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
+    command = "helm install stable/${var.cert_manager_helm_package} -n ${var.cert_manager_deployment_name} --namespace ${var.ingress_controller_namespace} --set config.LEGO_EMAIL=${var.certificate_email} --set config.LEGO_URL=https://acme-v01.api.letsencrypt.org/directory"
   }
 
   depends_on = ["azurerm_kubernetes_cluster.aks_managed_cluster"]

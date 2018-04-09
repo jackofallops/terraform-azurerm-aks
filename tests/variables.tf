@@ -10,3 +10,7 @@ variable "create_container_registry" {
   default = "true"
 //  default = "false"
 }
+
+variable "location" {
+  default = "westeurope"
+}
