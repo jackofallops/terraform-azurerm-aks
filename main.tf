@@ -32,15 +32,6 @@ resource "azurerm_kubernetes_cluster" "aks_managed_cluster" {
   }
 }
 
-data "template_file" "ingress_controller_patch" {
-  template = "templates/ingres_controller_patch.yaml.tpl"
-
-  vars {
-    deployment_name = "${var.nginx_deployment_name}"
-    k8snamespace    = "${var.ingress_controller_namespace}"
-  }
-}
-
 resource "null_resource" "provision" {
   provisioner "local-exec" {
     command = "az aks get-credentials -n ${var.cluster_name} -g ${azurerm_resource_group.aks_resource_group.name}"
@@ -58,16 +49,12 @@ resource "null_resource" "provision" {
 
   provisioner "local-exec" {
     # install ingress controller
-    command = "helm install stable/nginx-ingress -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace}"
-  }
-
-  provisioner "local-exec" {
-    command = "kubectl apply -f - | echo '${data.template_file.ingress_controller_patch.rendered}'"
+    command = "helm install stable/nginx-ingress -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace} --set controller.service.externalTrafficPolicy=Local"
   }
 
   # install cert-manager
   provisioner "local-exec" {
-    command = "helm install stable/${var.cert_manager_helm_package} -n ${var.cert_manager_deployment_name} --namespace ${var.ingress_controller_namespace} --set config.LEGO_EMAIL=${var.certificate_email} --set config.LEGO_URL=https://acme-v01.api.letsencrypt.org/directory"
+    command = "helm install stable/${var.cert_manager_helm_package} -n ${var.cert_manager_deployment_name} --namespace ${var.ingress_controller_namespace} --set config.LEGO_EMAIL=${var.certificate_email} --set config.LEGO_URL=${var.lets_encypt_url}"
   }
 
   depends_on = ["azurerm_kubernetes_cluster.aks_managed_cluster"]

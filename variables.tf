@@ -122,11 +122,14 @@ variable "cert_manager_deployment_name" {
   description = "Kubernetes deployment name for the certificate manager"
   default     = "certifcate-manager"
 }
+
 variable "cert_manager_helm_package" {
   description = <<EOF
 Certificate manager (LetsEncrypt implementation) - the deprecated 'kube-lego' should be used until AKS supports RBAC properly, at which time this module will be migrated to cert-manager
 EOF
-  default     = "kube-lego"
+
+  default = "kube-lego"
+
   //  default     = "cert-manager"
 }
 
@@ -140,3 +143,7 @@ variable "certificate_email" {
   default     = "noreply@contoso.com"
 }
 
+variable "lets_encypt_url" {
+  description = "URL to use for getting certificates from LetsEncrypt - defaults to v2 Staging"
+  default     = "https://acme-staging-v02.api.letsencrypt.org/directory"
+}
