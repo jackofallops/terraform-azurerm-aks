@@ -11,13 +11,11 @@ docker login ${acr_host} -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET
 
 Connect the new cluster to your existing Container Registry:
 # begin
-AKS_RESOURCE_GROUP=${cluster_resource_group}
-AKS_CLUSTER_NAME=${cluster_name}
 ACR_RESOURCE_GROUP=myACRResourceGroup #Update your acr resource group name here
 ACR_NAME=myACRRegistry #And the acr name here
 
 # Get the id of the service principal configured for AKS
-CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
+CLIENT_ID=$(az aks show --resource-group ${cluster_resource_group} --name ${cluster_name} --query "servicePrincipalProfile.clientId" --output tsv)
 
 # Get the ACR registry resource id
 ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --query "id" --output tsv)
