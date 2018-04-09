@@ -8,7 +8,8 @@ variable "sp_client_secret" {
 
 variable "create_container_registry" {
   default = "true"
-//  default = "false"
+
+  //  default = "false"
 }
 
 variable "location" {
