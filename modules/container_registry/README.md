@@ -3,11 +3,15 @@ sub module of [terraform-azurerm-aks](https://github.com/sjones-sot/terraform-az
 
 ## Usage
 Example:
+
 ```hcl-terraform
 module "my_acr" {
-  source "modules/container_registry"
-  create_registry = true
-  resource_group = "my_resource_group"
+  source              = "modules/container_registry"
+  create_registry     = "true"
+  registry_name       = "exampleacr"
+  resource_group_name = "my_resource_group"
+  sku                 = "Standard"
+
   tags = {
     bliiing_code = "1234"
     foo          = "bar"
