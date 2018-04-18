@@ -17,7 +17,3 @@ output "acr_fqdn" {
 output "acr_resource_group" {
   value = "${module.test_aks.container_registry_resource_group}"
 }
-
-output "usage_render_test" {
-  value = "${module.test_aks.usage}"
-}

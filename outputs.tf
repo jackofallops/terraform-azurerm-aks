@@ -18,6 +18,6 @@ output "container_registry_resource_group" {
   value = "${module.container_registry.resouce_group_name}"
 }
 
-output "usage" {
-  value = "${data.template_file.Usage_outputs.rendered}"
-}
+//output "usage" {
+//  value = "${data.template_file.Usage_outputs.rendered}"
+//}
