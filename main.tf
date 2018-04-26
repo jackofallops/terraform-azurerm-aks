@@ -16,6 +16,7 @@ resource "azurerm_kubernetes_cluster" "aks_managed_cluster" {
     count           = "${var.node_count}"
     os_type         = "Linux"
     os_disk_size_gb = "${var.node_os_disk_size_gb}"
+    vnet_subnet_id  = ""
   }
 
   linux_profile {
