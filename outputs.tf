@@ -21,3 +21,4 @@ output "container_registry_resource_group" {
 //output "usage" {
 //  value = "${data.template_file.Usage_outputs.rendered}"
 //}
+
