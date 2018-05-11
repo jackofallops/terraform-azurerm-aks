@@ -145,5 +145,5 @@ variable "certificate_email" {
 
 variable "lets_encypt_url" {
   description = "URL to use for getting certificates from LetsEncrypt - defaults to v2 Staging"
-  default     = "https://acme-staging-v02.api.letsencrypt.org/directory"
+  default     = "https://acme-staging.api.letsencrypt.org/directory"
 }
