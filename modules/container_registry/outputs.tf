@@ -7,7 +7,7 @@ output "fqdn" {
 }
 
 output "resouce_group_name" {
-  value = "${azurerm_resource_group.container_registry_rg.name}"
+  value = "${azurerm_resource_group.container_registry_rg.*.name}"
 }
 
 output "id" {

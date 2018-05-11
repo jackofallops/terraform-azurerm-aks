@@ -1,6 +1,7 @@
 resource "azurerm_resource_group" "container_registry_rg" {
   location = "${var.location}"
   name     = "${var.registry_name}-rg"
+  count    = "${var.create_registry == "true" ? 1 : 0 }"
 }
 
 resource "azurerm_container_registry" "container_registry" {
