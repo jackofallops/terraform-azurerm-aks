@@ -39,13 +39,18 @@ resource "null_resource" "provision" {
   }
 
   provisioner "local-exec" {
-    # install tiller and wait for the container to initialise on the cluster
-    command = "helm init && sleep 20 && kubectl cluster-info"
+    # Create cluster role for tiller to work with multiple namespaces
+    command = "kubectl apply -f ${path.module}/k8s/tiller-rbac.yaml"
   }
 
   provisioner "local-exec" {
     # update helm
-    command = "helm update"
+    command = "helm repo update && helm update"
+  }
+
+  provisioner "local-exec" {
+    # install tiller and wait for the container to initialise on the cluster
+    command = "helm init && sleep 20 && kubectl cluster-info"
   }
 
   provisioner "local-exec" {
