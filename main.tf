@@ -50,7 +50,7 @@ resource "null_resource" "provision" {
 
   provisioner "local-exec" {
     # install tiller and wait for the container to initialise on the cluster
-    command = "helm init && sleep 20 && kubectl cluster-info"
+    command = "helm init --service-account tiller && sleep 20 && kubectl cluster-info"
   }
 
   provisioner "local-exec" {
