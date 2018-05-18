@@ -55,7 +55,7 @@ resource "null_resource" "provision" {
 
   provisioner "local-exec" {
     # install ingress controller
-    command = "helm install stable/nginx-ingress -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace} --set controller.service.externalTrafficPolicy=Local"
+    command = "helm install stable/nginx-ingress -n ${var.nginx_deployment_name} --namespace ${var.ingress_controller_namespace} --set controller.service.externalTrafficPolicy=Local --set controller.extraArgs.publish-service='${var.ingress_controller_namespace}/ingress-nginx-nginx-ingress-controller'"
   }
 
   # install cert-manager
