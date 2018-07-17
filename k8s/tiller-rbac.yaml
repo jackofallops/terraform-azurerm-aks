@@ -3,16 +3,27 @@ kind: ServiceAccount
 metadata:
   name: tiller
   namespace: kube-system
-
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: tiller-admin
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: null
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: cluster-admin
 rules:
-- apiGroups: ["*"]
-  resources: ["*"]
-  verbs: ["*"]
+  - apiGroups:
+    - '*'
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - nonResourceURLs:
+    - '*'
+    verbs:
+    - '*'
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -22,7 +33,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: tiller-admin
+  name: cluster-admin
 subjects:
   - kind: ServiceAccount
     name: tiller

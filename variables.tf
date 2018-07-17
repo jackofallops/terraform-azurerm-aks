@@ -123,27 +123,7 @@ variable "cert_manager_deployment_name" {
   default     = "certifcate-manager"
 }
 
-variable "cert_manager_helm_package" {
-  description = <<EOF
-Certificate manager (LetsEncrypt implementation) - the deprecated 'kube-lego' should be used until AKS supports RBAC properly, at which time this module will be migrated to cert-manager
-EOF
-
-  default = "kube-lego"
-
-  //  default     = "cert-manager"
-}
-
 variable "ingress_controller_namespace" {
   description = "Kubernetes namespace the ingress controller will be deployed into"
   default     = "default"
-}
-
-variable "certificate_email" {
-  description = "(Reqiured) Email account to use for the LetsEncrypt service"
-  default     = "noreply@contoso.com"
-}
-
-variable "lets_encypt_url" {
-  description = "URL to use for getting certificates from LetsEncrypt - defaults to v2 Staging"
-  default     = "https://acme-staging.api.letsencrypt.org/directory"
 }
